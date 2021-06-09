@@ -7,11 +7,21 @@ function App() {
 
   const handleChange = event => {
     setTextInput(event.target.value);
+    setTextOutput('');
   };
 
   const handleSubmit = event => {
     event.preventDefault();
-    setTextOutput('Your formatted text will go here!')
+    switch (event.nativeEvent.submitter.name) {
+      case 'lower':
+        setTextOutput(textInput.toLowerCase());
+        break;
+      case 'upper':
+        setTextOutput(textInput.toUpperCase());
+        break;
+      default:
+        return null;
+    }
   };
 
   return (
@@ -23,7 +33,16 @@ function App() {
         <label>
           <textarea onChange={handleChange} value={textInput}/>
         </label>
-        <input type="submit" value="Submit"/>
+        <input 
+          type="submit"
+          name="lower"
+          value="to lower case"
+        />
+        <input 
+          type="submit"
+          name="upper"
+          value="TO UPPER CASE"
+        />
       </form>
       <div id="result">
         {textOutput}
